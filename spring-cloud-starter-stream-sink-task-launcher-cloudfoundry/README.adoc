@@ -1,0 +1,80 @@
+//tag::ref-doc[]
+= TaskLauncher Cloud Foundry Sink
+
+The TaskLauncher-CloudFoundry sink consumes a `TaskLaunchRequest` message, then
+deploys and launches a task using the Cloud Foundry Spring Cloud Deployer.
+With that being said a single TaskLauncher-CloudFoundry can launch different
+tasks based on the artifact that is specified in the `TaskLaunchRequest`.
+For example: using Spring Cloud Data Flow you could have a
+TaskLauncher-CloudFoundry sink on a stream that will receive messages from a
+destination i.e.:
+
+```
+:myDestination > cftask
+```
+
+And thus multiple streams can send `TaskLaunchRequest`s to the `myDestination`
+each request having its own artifact specified.
+
+Any message received by the sink, that does not contain a `TaskLaunchRequest`
+will log an error.
+
+== Using the TaskLauncher
+The task launcher deploys and launches a
+link:https://cloud.spring.io/spring-cloud-task[Spring Cloud Task] Boot
+application as a task on the Cloud Foundry Platform based on contents from the
+`TaskLaunchRequest` message that it receives. The `TaskLaunchRequest` contains
+attributes that are used by the task launcher to execute the task:
+
+* uri - contains the uri to the Spring Cloud Task Boot application artifact
+that the task launcher will deploy to the Cloud Foundry Platform.
+* commandLineArguments - list of commandlineArguments to be used by the
+Spring Cloud Task Boot application.
+* deploymentProperties - properties to be used by the task launcher to deploy
+the task to the platform.
+
+An example of this using Spring Cloud Data Flow would be to create a
+stream where a
+link:https://github.com/spring-cloud/spring-cloud-stream-app-starters/tree/master/http[http]
+source would send its messages to the
+link:https://github.com/spring-cloud/spring-cloud-stream-app-starters/tree/master/processor/spring-cloud-starter-stream-processor-tasklaunchrequest-transform[taskLaunchRequestTransform]
+processor. These messages are then translated to a TaskLaunchRequest and
+sent to the `cftask` sink (which is a Cloud Foundry TaskLauncher).  For example:
+
+*Create A Stream*
+
+`stream create task-stream --definition "http --port=9000 | tasklaunchrequest-transform
+--uri=<uriToJar> | cftask"`
+
+*Deploy The Stream*
+
+`stream deploy task-stream --properties "app.cftask.spring_cloud_deployer_cloudfoundry_url=https://api.local.pcfdev.io, app.cftask.spring_cloud_deployer_cloudfoundry_org=pcfdev-org, app.cftask.spring_cloud_deployer_cloudfoundry_space=pcfdev-space, app.cftask.spring_cloud_deployer_cloudfoundry_domain=local.pcfdev.io, app.cftask.spring_cloud_deployer_cloudfoundry_username=admin, app.cftask.spring_cloud_deployer_cloudfoundry_password=admin, app.cftask.spring_cloud_deployer_cloudfoundry_skipSslValidation=true, app.cftask.spring_cloud_deployer_cloudfoundry_services=mysql, app.cftask.spring_cloud_deployer_cloudfoundry_taskTimeout=300"`
+
+*Test The Stream*
+
+`http post --target http://localhost:9000 --data hello`
+
+This example deploys to pcfdev using a mysql database service with the
+service name of `mysql`.  Also we can see that there is a taskTimeout of 300
+seconds for staging the task.
+
+//tag::configuration-properties[]
+$$spring.cloud.deployer.cloudfoundry.domain$$:: $$The domain to use when mapping routes for applications.$$ *($$String$$, default: `$$<none>$$`)*
+$$spring.cloud.deployer.cloudfoundry.org$$:: $$The organization to use when registering new applications.$$ *($$String$$, default: `$$<none>$$`)*
+$$spring.cloud.deployer.cloudfoundry.password$$:: $$Password to use to authenticate against the Cloud Foundry API.$$ *($$String$$, default: `$$<none>$$`)*
+$$spring.cloud.deployer.cloudfoundry.services$$:: $$The names of services to bind to all applications deployed as a module.
+ This should typically contain a service capable of playing the role of a binding transport.$$ *($$java.util.Set<java.lang.String>$$, default: `$$<none>$$`)*
+$$spring.cloud.deployer.cloudfoundry.skip-ssl-validation$$:: $$Allow operation using self-signed certificates.$$ *($$Boolean$$, default: `$$false$$`)*
+$$spring.cloud.deployer.cloudfoundry.space$$:: $$The space to use when registering new applications.$$ *($$String$$, default: `$$<none>$$`)*
+$$spring.cloud.deployer.cloudfoundry.task-timeout$$:: $$Timeout for blocking task launches.$$ *($$Long$$, default: `$$30$$`)*
+$$spring.cloud.deployer.cloudfoundry.url$$:: $$Location of the CloudFoundry REST API endpoint to use.$$ *($$URL$$, default: `$$<none>$$`)*
+$$spring.cloud.deployer.cloudfoundry.username$$:: $$Username to use to authenticate against the Cloud Foundry API.$$ *($$String$$, default: `$$<none>$$`)*
+//end::configuration-properties[]
+
+//end::ref-doc[]
+
+== Build
+
+```
+$ mvn clean package
+```
