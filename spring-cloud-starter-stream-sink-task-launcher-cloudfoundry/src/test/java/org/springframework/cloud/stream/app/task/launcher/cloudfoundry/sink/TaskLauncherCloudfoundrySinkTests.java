@@ -25,11 +25,14 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.cloud.deployer.spi.cloudfoundry.CloudFoundryConnectionProperties;
 import org.springframework.cloud.deployer.spi.cloudfoundry.CloudFoundryDeploymentProperties;
+import org.springframework.cloud.deployer.spi.task.TaskLauncher;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * Test Properties for the Task Launcher Cloud Foundry Sink.
@@ -70,6 +73,11 @@ public abstract class TaskLauncherCloudfoundrySinkTests {
 
 	@SpringBootApplication
 	public static class TaskLauncherSinkApplication {
+
+		@Bean
+		public TaskLauncher taskLauncher() {
+			return mock(TaskLauncher.class);
+		}
 
 	}
 }
