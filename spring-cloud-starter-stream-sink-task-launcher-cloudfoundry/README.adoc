@@ -59,6 +59,7 @@ service name of `mysql`.  Also we can see that there is a taskTimeout of 300
 seconds for staging the task.
 
 //tag::configuration-properties[]
+$$spring.cloud.deployer.cloudfoundry.api-timeout$$:: $$Timeout for blocking API calls, in seconds.$$ *($$Long$$, default: `$$30$$`)*
 $$spring.cloud.deployer.cloudfoundry.domain$$:: $$The domain to use when mapping routes for applications.$$ *($$String$$, default: `$$<none>$$`)*
 $$spring.cloud.deployer.cloudfoundry.org$$:: $$The organization to use when registering new applications.$$ *($$String$$, default: `$$<none>$$`)*
 $$spring.cloud.deployer.cloudfoundry.password$$:: $$Password to use to authenticate against the Cloud Foundry API.$$ *($$String$$, default: `$$<none>$$`)*
@@ -66,7 +67,6 @@ $$spring.cloud.deployer.cloudfoundry.services$$:: $$The names of services to bin
  This should typically contain a service capable of playing the role of a binding transport.$$ *($$java.util.Set<java.lang.String>$$, default: `$$<none>$$`)*
 $$spring.cloud.deployer.cloudfoundry.skip-ssl-validation$$:: $$Allow operation using self-signed certificates.$$ *($$Boolean$$, default: `$$false$$`)*
 $$spring.cloud.deployer.cloudfoundry.space$$:: $$The space to use when registering new applications.$$ *($$String$$, default: `$$<none>$$`)*
-$$spring.cloud.deployer.cloudfoundry.task-timeout$$:: $$Timeout for blocking task launches.$$ *($$Long$$, default: `$$30$$`)*
 $$spring.cloud.deployer.cloudfoundry.url$$:: $$Location of the CloudFoundry REST API endpoint to use.$$ *($$URL$$, default: `$$<none>$$`)*
 $$spring.cloud.deployer.cloudfoundry.username$$:: $$Username to use to authenticate against the Cloud Foundry API.$$ *($$String$$, default: `$$<none>$$`)*
 //end::configuration-properties[]

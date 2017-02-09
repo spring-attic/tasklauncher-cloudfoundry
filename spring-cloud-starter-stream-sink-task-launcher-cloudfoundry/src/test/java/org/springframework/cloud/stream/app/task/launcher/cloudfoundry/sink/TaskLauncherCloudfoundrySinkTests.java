@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +21,14 @@ import org.junit.runner.RunWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.deployer.spi.cloudfoundry.CloudFoundryConnectionProperties;
 import org.springframework.cloud.deployer.spi.cloudfoundry.CloudFoundryDeploymentProperties;
 import org.springframework.cloud.deployer.spi.task.TaskLauncher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -38,11 +38,11 @@ import static org.mockito.Mockito.mock;
  * Test Properties for the Task Launcher Cloud Foundry Sink.
  *
  * @author Glenn Renfro
+ * @author Thomas Risberg
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TaskLauncherCloudfoundrySinkTests.TaskLauncherSinkApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 @DirtiesContext
-@IntegrationTest()
 public abstract class TaskLauncherCloudfoundrySinkTests {
 
 	@Autowired
@@ -51,10 +51,10 @@ public abstract class TaskLauncherCloudfoundrySinkTests {
 	@Autowired
 	protected CloudFoundryDeploymentProperties taskDeploymentProperties;
 
-	@IntegrationTest({ "spring.cloud.deployer.cloudfoundry.url = http://hello", "spring.cloud.deployer.cloudfoundry.password = bar",
+	@TestPropertySource(properties = { "spring.cloud.deployer.cloudfoundry.url = http://hello", "spring.cloud.deployer.cloudfoundry.password = bar",
 			"spring.cloud.deployer.cloudfoundry.username = foo", "spring.cloud.deployer.cloudfoundry.space = space",
 			"spring.cloud.deployer.cloudfoundry.org = org", "spring.cloud.deployer.cloudfoundry.domain=baz",
-			"spring.cloud.deployer.cloudfoundry.services=mydb", "spring.cloud.deployer.cloudfoundry.taskTimeout=123"})
+			"spring.cloud.deployer.cloudfoundry.services=mydb", "spring.cloud.deployer.cloudfoundry.apiTimeout=123"})
 	public static class PropertiesPopulatedTests extends TaskLauncherCloudfoundrySinkTests {
 
 		@Test
@@ -66,7 +66,7 @@ public abstract class TaskLauncherCloudfoundrySinkTests {
 			assertEquals("space", cloudFoundryConnectionProperties.getSpace());
 
 			assertEquals("baz", taskDeploymentProperties.getDomain());
-			assertEquals(123, taskDeploymentProperties.getTaskTimeout());
+			assertEquals(123, taskDeploymentProperties.getApiTimeout());
 			assertTrue(taskDeploymentProperties.getServices().contains("mydb"));
 		}
 	}
