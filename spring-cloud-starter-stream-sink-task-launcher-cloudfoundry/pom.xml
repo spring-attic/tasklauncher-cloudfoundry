@@ -10,12 +10,6 @@
 
 	<artifactId>spring-cloud-starter-stream-sink-task-launcher-cloudfoundry</artifactId>
 
-	<properties>
-		<io-projectreactor-core.version>3.0.2.RELEASE</io-projectreactor-core.version>
-		<io-projectreactor-ipc.version>0.5.1.RELEASE</io-projectreactor-ipc.version>
-		<io-netty-all.version>4.1.5.Final</io-netty-all.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -38,16 +32,8 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.projectreactor.ipc</groupId>
-			<artifactId>reactor-netty</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -70,25 +56,7 @@
 						<version>${project.version}</version>
 					</bom>
 					<generatedApps>
-						<task-launcher-cloudfoundry-sink>
-							<forceDependencies>
-								<dependency>
-									<groupId>io.projectreactor</groupId>
-									<artifactId>reactor-core</artifactId>
-									<version>${io-projectreactor-core.version}</version>
-								</dependency>
-								<dependency>
-									<groupId>io.projectreactor.ipc</groupId>
-									<artifactId>reactor-netty</artifactId>
-									<version>${io-projectreactor-ipc.version}</version>
-								</dependency>
-								<dependency>
-									<groupId>io.netty</groupId>
-									<artifactId>netty-all</artifactId>
-									<version>${io-netty-all.version}</version>
-								</dependency>
-							</forceDependencies>
-						</task-launcher-cloudfoundry-sink>
+						<task-launcher-cloudfoundry-sink/>
 					</generatedApps>
 				</configuration>
 			</plugin>

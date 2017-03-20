@@ -48,7 +48,7 @@ sent to the `cftask` sink (which is a Cloud Foundry TaskLauncher).  For example:
 
 *Deploy The Stream*
 
-`stream deploy task-stream --properties "app.cftask.spring_cloud_deployer_cloudfoundry_url=https://api.local.pcfdev.io, app.cftask.spring_cloud_deployer_cloudfoundry_org=pcfdev-org, app.cftask.spring_cloud_deployer_cloudfoundry_space=pcfdev-space, app.cftask.spring_cloud_deployer_cloudfoundry_domain=local.pcfdev.io, app.cftask.spring_cloud_deployer_cloudfoundry_username=admin, app.cftask.spring_cloud_deployer_cloudfoundry_password=admin, app.cftask.spring_cloud_deployer_cloudfoundry_skipSslValidation=true, app.cftask.spring_cloud_deployer_cloudfoundry_services=mysql, app.cftask.spring_cloud_deployer_cloudfoundry_taskTimeout=300"`
+`stream deploy task-stream --properties "app.cftask.spring.cloud.deployer.cloudfoundry.url=https://api.local.pcfdev.io, app.cftask.spring.cloud.deployer.cloudfoundry.org=pcfdev-org, app.cftask.spring.cloud.deployer.cloudfoundry.space=pcfdev-space, app.cftask.spring.cloud.deployer.cloudfoundry.domain=local.pcfdev.io, app.cftask.spring.cloud.deployer.cloudfoundry.username=admin, app.cftask.spring.cloud.deployer.cloudfoundry.password=admin, app.cftask.spring.cloud.deployer.cloudfoundry.skipSslValidation=true, app.cftask.spring.cloud.deployer.cloudfoundry.services=mysql, app.cftask.spring.cloud.deployer.cloudfoundry.taskTimeout=300"`
 
 *Test The Stream*
 
@@ -57,6 +57,15 @@ sent to the `cftask` sink (which is a Cloud Foundry TaskLauncher).  For example:
 This example deploys to pcfdev using a mysql database service with the
 service name of `mysql`.  Also we can see that there is a taskTimeout of 300
 seconds for staging the task.
+
+== Remote Repositories
+If the tasklauncher-cloudfoundry app needs to resolve artifacts from remote
+maven repositories, be sure to set the `--maven.remote-repositories` properties.
+For example:
+
+```
+stream create foo --definition "triggertask --uri=maven://org.springframework.cloud.task.app:timestamp-task:jar:1.0.1.RELEASE --fixed-delay=5 | task-launcher-local --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot"
+```
 
 //tag::configuration-properties[]
 $$spring.cloud.deployer.cloudfoundry.api-timeout$$:: $$Timeout for blocking API calls, in seconds.$$ *($$Long$$, default: `$$30$$`)*
