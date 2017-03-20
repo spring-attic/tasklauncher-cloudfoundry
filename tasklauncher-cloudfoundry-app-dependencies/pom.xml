@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.cloud.stream.app</groupId>
     <artifactId>tasklauncher-cloudfoundry-app-dependencies</artifactId>
@@ -9,18 +11,17 @@
     <description>Spring Cloud Stream tasklauncher cloudfoundry App Dependencies</description>
 
     <parent>
-	<artifactId>spring-cloud-dependencies-parent</artifactId>
+        <artifactId>spring-cloud-dependencies-parent</artifactId>
         <groupId>org.springframework.cloud</groupId>
         <version>1.2.1.RELEASE</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <properties>
-        <spring-cloud-deployer-cloudfoundry.version>1.1.0.RELEASE</spring-cloud-deployer-cloudfoundry.version>
-        <spring.cloud.task.version>1.1.2.RELEASE</spring.cloud.task.version>
-        <reactor.version>3.0.4.RELEASE</reactor.version>
-        <reactor-netty.version>0.6.0.RELEASE</reactor-netty.version>
-        <netty.version>4.1.5.Final</netty.version>
+        <spring-cloud-deployer-cloudfoundry.version>1.2.0.BUILD-SNAPSHOT</spring-cloud-deployer-cloudfoundry.version>
+        <spring.cloud.task.version>1.1.2.BUILD-SNAPSHOT</spring.cloud.task.version>
+        <reactor.version>3.0.5.RELEASE</reactor.version>
+        <spring-cloud-deployer-spi.version>1.2.0.BUILD-SNAPSHOT</spring-cloud-deployer-spi.version>
     </properties>
 
     <dependencyManagement>
@@ -41,89 +42,82 @@
                 <version>${spring-cloud-deployer-cloudfoundry.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
                 <version>${reactor.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>io.projectreactor.ipc</groupId>
-                <artifactId>reactor-netty</artifactId>
-                <version>${reactor-netty.version}</version>
-                <scope>test</scope>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-deployer-spi</artifactId>
+                <version>${spring-cloud-deployer-spi.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-<profiles>
-		<profile>
-			<id>spring</id>
-			<repositories>
-				<repository>
-					<id>spring-snapshots</id>
-					<name>Spring Snapshots</name>
-					<url>http://repo.spring.io/libs-snapshot-local</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
-				<repository>
-					<id>spring-milestones</id>
-					<name>Spring Milestones</name>
-					<url>http://repo.spring.io/libs-milestone-local</url>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-				<repository>
-					<id>spring-releases</id>
-					<name>Spring Releases</name>
-					<url>http://repo.spring.io/release</url>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-				<repository>
-					<id>spring-libs-release</id>
-					<name>Spring Libs Release</name>
-					<url>http://repo.spring.io/libs-release</url>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-				<repository>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-					<id>spring-milestone-release</id>
-					<name>Spring Milestone Release</name>
-					<url>http://repo.spring.io/libs-milestone</url>
-				</repository>
-			</repositories>
-			<pluginRepositories>
-				<pluginRepository>
-					<id>spring-snapshots</id>
-					<name>Spring Snapshots</name>
-					<url>http://repo.spring.io/libs-snapshot-local</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</pluginRepository>
-				<pluginRepository>
-					<id>spring-milestones</id>
-					<name>Spring Milestones</name>
-					<url>http://repo.spring.io/libs-milestone-local</url>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</pluginRepository>
-			</pluginRepositories>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>spring</id>
+            <repositories>
+                <repository>
+                    <id>spring-snapshots</id>
+                    <name>Spring Snapshots</name>
+                    <url>http://repo.spring.io/libs-snapshot-local</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>spring-milestones</id>
+                    <name>Spring Milestones</name>
+                    <url>http://repo.spring.io/libs-milestone-local</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>spring-releases</id>
+                    <name>Spring Releases</name>
+                    <url>http://repo.spring.io/release</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>spring-libs-release</id>
+                    <name>Spring Libs Release</name>
+                    <url>http://repo.spring.io/libs-release</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>spring-milestone-release</id>
+                    <name>Spring Milestone Release</name>
+                    <url>http://repo.spring.io/libs-milestone</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>spring-snapshots</id>
+                    <name>Spring Snapshots</name>
+                    <url>http://repo.spring.io/libs-snapshot-local</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>spring-milestones</id>
+                    <name>Spring Milestones</name>
+                    <url>http://repo.spring.io/libs-milestone-local</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
 
 </project>

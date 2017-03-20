@@ -16,11 +16,18 @@
 
 package org.springframework.cloud.stream.app.task.launcher.cloudfoundry.sink;
 
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+
+import com.github.zafarkhaja.semver.Version;
+import org.cloudfoundry.client.CloudFoundryClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.deployer.spi.cloudfoundry.CloudFoundryConnectionProperties;
 import org.springframework.cloud.deployer.spi.cloudfoundry.CloudFoundryDeploymentProperties;
@@ -29,10 +36,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 /**
  * Test Properties for the Task Launcher Cloud Foundry Sink.
@@ -79,5 +82,9 @@ public abstract class TaskLauncherCloudfoundrySinkTests {
 			return mock(TaskLauncher.class);
 		}
 
+		@Bean
+		public Version version(CloudFoundryClient client) {
+			return Version.forIntegers(1, 2, 3);
+		}
 	}
 }
