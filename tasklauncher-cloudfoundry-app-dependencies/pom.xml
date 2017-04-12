@@ -19,7 +19,7 @@
 
     <properties>
         <spring-cloud-deployer-cloudfoundry.version>1.2.0.BUILD-SNAPSHOT</spring-cloud-deployer-cloudfoundry.version>
-        <spring.cloud.task.version>1.1.2.BUILD-SNAPSHOT</spring.cloud.task.version>
+        <spring.cloud.task.version>1.1.2.RELEASE</spring.cloud.task.version>
         <reactor.version>3.0.5.RELEASE</reactor.version>
         <spring-cloud-deployer-spi.version>1.2.0.BUILD-SNAPSHOT</spring-cloud-deployer-spi.version>
     </properties>
