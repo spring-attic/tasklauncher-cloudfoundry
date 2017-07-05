@@ -35,6 +35,10 @@
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-core</artifactId>
 		</dependency>
+		<dependency>
+			<artifactId>spring-cloud-deployer-resource-maven</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+		</dependency>
 	</dependencies>
 
 	<build>
