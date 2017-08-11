@@ -2,24 +2,27 @@
 = TaskLauncher Cloud Foundry Sink
 
 The TaskLauncher-CloudFoundry sink consumes a `TaskLaunchRequest` message, then
-deploys and launches a task using the Cloud Foundry Spring Cloud Deployer.
-With that being said a single TaskLauncher-CloudFoundry can launch different
+deploys and launches a task onto a Cloud Foundry instance using
+the Cloud Foundry Spring Cloud Deployer.  With that being said a single
+TaskLauncher-CloudFoundry can launch different
 tasks based on the artifact that is specified in the `TaskLaunchRequest`.
-For example: using Spring Cloud Data Flow you could have a
-TaskLauncher-CloudFoundry sink on a stream that will receive messages from a
-destination i.e.:
 
-```
-:myDestination > cftask
-```
+== Input
 
-And thus multiple streams can send `TaskLaunchRequest`s to the `myDestination`
-each request having its own artifact specified.
+=== Headers:
 
-Any message received by the sink, that does not contain a `TaskLaunchRequest`
-will log an error.
+* `Content-Type: application/octet-stream`
+
+=== Payload:
+
+A  byte array containing the `TaskLaunchRequest`
+
+== Output
+
+N/A (deploys and launches task to a Cloud Foundry instance).
 
 == Using the TaskLauncher
+
 The task launcher deploys and launches a
 link:https://cloud.spring.io/spring-cloud-task[Spring Cloud Task] Boot
 application as a task on the Cloud Foundry Platform based on contents from the
@@ -33,30 +36,8 @@ Spring Cloud Task Boot application.
 * deploymentProperties - properties to be used by the task launcher to deploy
 the task to the platform.
 
-An example of this using Spring Cloud Data Flow would be to create a
-stream where a
-link:https://github.com/spring-cloud/spring-cloud-stream-app-starters/tree/master/http[http]
-source would send its messages to the
-link:https://github.com/spring-cloud/spring-cloud-stream-app-starters/tree/master/processor/spring-cloud-starter-stream-processor-tasklaunchrequest-transform[taskLaunchRequestTransform]
-processor. These messages are then translated to a TaskLaunchRequest and
-sent to the `cftask` sink (which is a Cloud Foundry TaskLauncher).  For example:
+NOTE: Any message received by the sink, that does not contain a `TaskLaunchRequest` will log an error.
 
-*Create A Stream*
-
-`stream create task-stream --definition "http --port=9000 | tasklaunchrequest-transform
---uri=<uriToJar> | cftask"`
-
-*Deploy The Stream*
-
-`stream deploy task-stream --properties "app.cftask.spring.cloud.deployer.cloudfoundry.url=https://api.local.pcfdev.io, app.cftask.spring.cloud.deployer.cloudfoundry.org=pcfdev-org, app.cftask.spring.cloud.deployer.cloudfoundry.space=pcfdev-space, app.cftask.spring.cloud.deployer.cloudfoundry.domain=local.pcfdev.io, app.cftask.spring.cloud.deployer.cloudfoundry.username=admin, app.cftask.spring.cloud.deployer.cloudfoundry.password=admin, app.cftask.spring.cloud.deployer.cloudfoundry.skipSslValidation=true, app.cftask.spring.cloud.deployer.cloudfoundry.services=mysql, app.cftask.spring.cloud.deployer.cloudfoundry.taskTimeout=300"`
-
-*Test The Stream*
-
-`http post --target http://localhost:9000 --data hello`
-
-This example deploys to pcfdev using a mysql database service with the
-service name of `mysql`.  Also we can see that there is a taskTimeout of 300
-seconds for staging the task.
 
 == Remote Repositories
 If the tasklauncher-cloudfoundry app needs to resolve artifacts from remote
@@ -64,7 +45,7 @@ maven repositories, be sure to set the `--maven.remote-repositories` properties.
 For example:
 
 ```
-stream create foo --definition "triggertask --uri=maven://org.springframework.cloud.task.app:timestamp-task:jar:1.0.1.RELEASE --fixed-delay=5 | task-launcher-local --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot"
+java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot
 ```
 
 //tag::configuration-properties[]
@@ -80,10 +61,35 @@ $$spring.cloud.deployer.cloudfoundry.url$$:: $$Location of the CloudFoundry REST
 $$spring.cloud.deployer.cloudfoundry.username$$:: $$Username to use to authenticate against the Cloud Foundry API.$$ *($$String$$, default: `$$<none>$$`)*
 //end::configuration-properties[]
 
-//end::ref-doc[]
-
 == Build
 
 ```
-$ mvn clean package
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
 ```
+You can find the corresponding binder based projects here. You can then cd into one one of the folders and
+build it:
+```
+$ ./mvnw clean package
+```
+
+== Examples
+
+The following example assumes a TaskLaunchRequest payload is sent to a default
+destination called `input`, the sink retrieves the uri of the task jar, the
+command line arguments, and deployment properties from the TaskLaunchRequest,
+which it uses to deploy and launch the task.
+
+```
+java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot \
+    --spring.cloud.deployer.cloudfoundry.url=https://api.local.pcfdev.io \
+    --spring.cloud.deployer.cloudfoundry.org=user-dataflow \
+    --spring.cloud.deployer.cloudfoundry.space=development \
+    --spring.cloud.deployer.cloudfoundry.domain=local.pcfdev.io \
+    --spring.cloud.deployer.cloudfoundry.username=admin \
+    --spring.cloud.deployer.cloudfoundry.password=admin \
+    --spring.cloud.deployer.cloudfoundry.skipSslValidation=true \
+    --spring.cloud.deployer.cloudfoundry.taskTimeout=300
+```
+
+//end::ref-doc[]
