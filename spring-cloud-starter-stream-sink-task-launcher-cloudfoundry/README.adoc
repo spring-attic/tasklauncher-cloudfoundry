@@ -36,8 +36,17 @@ Spring Cloud Task Boot application.
 * deploymentProperties - properties to be used by the task launcher to deploy
 the task to the platform.
 
-NOTE: Any message received by the sink, that does not contain a `TaskLaunchRequest`
-      will log an error.
+NOTE: Any message received by the sink, that does not contain a `TaskLaunchRequest` will log an error.
+
+
+== Remote Repositories
+If the tasklauncher-cloudfoundry app needs to resolve artifacts from remote
+maven repositories, be sure to set the `--maven.remote-repositories` properties.
+For example:
+
+```
+java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot
+```
 
 //tag::configuration-properties[]
 $$spring.cloud.deployer.cloudfoundry.api-timeout$$:: $$Timeout for blocking API calls, in seconds.$$ *($$Long$$, default: `$$360$$`)*
@@ -55,7 +64,13 @@ $$spring.cloud.deployer.cloudfoundry.username$$:: $$Username to use to authentic
 == Build
 
 ```
-$ mvn clean package
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
+
+You can find the corresponding binder based projects here. You can then cd into one one of the folders and
+build it:
+
+$ ./mvnw clean package
 ```
 
 == Examples
@@ -67,15 +82,6 @@ which it uses to deploy and launch the task.
 
 ```
 java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot --spring.cloud.deployer.cloudfoundry.url=https://api.local.pcfdev.io --spring.cloud.deployer.cloudfoundry.org=user-dataflow --spring.cloud.deployer.cloudfoundry.space=development --spring.cloud.deployer.cloudfoundry.domain=local.pcfdev.io --spring.cloud.deployer.cloudfoundry.username=admin --spring.cloud.deployer.cloudfoundry.password=admin --spring.cloud.deployer.cloudfoundry.skipSslValidation=true --spring.cloud.deployer.cloudfoundry.taskTimeout=300
-```
-
-== Remote Repositories
-If the tasklauncher-cloudfoundry app needs to resolve artifacts from remote
-maven repositories, be sure to set the `--maven.remote-repositories` properties.
-For example:
-
-```
-java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot
 ```
 
 //end::ref-doc[]
