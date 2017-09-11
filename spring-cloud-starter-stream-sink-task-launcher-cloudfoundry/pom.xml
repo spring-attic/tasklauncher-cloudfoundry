@@ -39,6 +39,10 @@
 			<artifactId>spring-cloud-deployer-resource-maven</artifactId>
 			<groupId>org.springframework.cloud</groupId>
 		</dependency>
+		<dependency>
+			<artifactId>spring-cloud-deployer-resource-docker</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -57,6 +57,11 @@
                 <groupId>org.springframework.cloud</groupId>
                 <version>${spring-cloud-deployer-spi.version}</version>
             </dependency>
+            <dependency>
+                <artifactId>spring-cloud-deployer-resource-docker</artifactId>
+                <groupId>org.springframework.cloud</groupId>
+                <version>${spring-cloud-deployer-spi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <profiles>
