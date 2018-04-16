@@ -18,10 +18,12 @@
     </parent>
 
     <properties>
-        <spring-cloud-deployer-cloudfoundry.version>1.2.1.RELEASE</spring-cloud-deployer-cloudfoundry.version>
-        <spring.cloud.task.version>1.2.1.RELEASE</spring.cloud.task.version>
-        <reactor.version>3.0.7.RELEASE</reactor.version>
-        <spring-cloud-deployer-spi.version>1.2.1.RELEASE</spring-cloud-deployer-spi.version>
+        <spring-cloud-deployer-cloudfoundry.version>1.4.0.BUILD-SNAPSHOT</spring-cloud-deployer-cloudfoundry.version>
+        <spring.cloud.task.version>2.0.0.RC1</spring.cloud.task.version>
+        <spring-cloud-deployer-spi.version>1.3.2.BUILD-SNAPSHOT</spring-cloud-deployer-spi.version>
+        <!-- Aligning these 2 properties with what CFJC uses (CFJC coming in as a transitive for cf-deployer-->
+        <reactor.version>3.1.5.RELEASE</reactor.version>
+        <reactor-netty.version>0.7.5.RELEASE</reactor-netty.version>
     </properties>
 
     <dependencyManagement>
@@ -45,6 +47,12 @@
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
                 <version>${reactor.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor.ipc</groupId>
+                <artifactId>reactor-netty</artifactId>
+                <version>${reactor-netty.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

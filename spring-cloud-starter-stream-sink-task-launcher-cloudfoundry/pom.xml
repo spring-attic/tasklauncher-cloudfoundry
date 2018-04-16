@@ -36,6 +36,10 @@
 			<artifactId>reactor-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.projectreactor.ipc</groupId>
+			<artifactId>reactor-netty</artifactId>
+		</dependency>
+		<dependency>
 			<artifactId>spring-cloud-deployer-resource-maven</artifactId>
 			<groupId>org.springframework.cloud</groupId>
 		</dependency>
