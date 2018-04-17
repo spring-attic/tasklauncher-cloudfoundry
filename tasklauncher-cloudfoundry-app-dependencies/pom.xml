@@ -24,6 +24,7 @@
         <!-- Aligning these 2 properties with what CFJC uses (CFJC coming in as a transitive for cf-deployer-->
         <reactor.version>3.1.5.RELEASE</reactor.version>
         <reactor-netty.version>0.7.5.RELEASE</reactor-netty.version>
+        <reactor-buffer.version>4.1.23.Final</reactor-buffer.version>
     </properties>
 
     <dependencyManagement>
@@ -47,13 +48,11 @@
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
                 <version>${reactor.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor.ipc</groupId>
                 <artifactId>reactor-netty</artifactId>
                 <version>${reactor-netty.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -69,6 +68,11 @@
                 <artifactId>spring-cloud-deployer-resource-docker</artifactId>
                 <groupId>org.springframework.cloud</groupId>
                 <version>${spring-cloud-deployer-spi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-buffer</artifactId>
+                <version>${reactor-buffer.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
