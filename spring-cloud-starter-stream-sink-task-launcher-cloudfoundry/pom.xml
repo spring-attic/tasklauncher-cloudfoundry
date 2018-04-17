@@ -40,6 +40,10 @@
 			<artifactId>reactor-netty</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-buffer</artifactId>
+		</dependency>
+		<dependency>
 			<artifactId>spring-cloud-deployer-resource-maven</artifactId>
 			<groupId>org.springframework.cloud</groupId>
 		</dependency>
