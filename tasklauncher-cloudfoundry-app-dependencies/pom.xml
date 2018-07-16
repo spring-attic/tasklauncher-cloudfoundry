@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.cloud.stream.app</groupId>
     <artifactId>tasklauncher-cloudfoundry-app-dependencies</artifactId>
-    <version>2.0.1.BUILD-SNAPSHOT</version>
+    <version>2.0.1.RELEASE</version>
     <packaging>pom</packaging>
     <name>tasklauncher-cloudfoundry-app-dependencies</name>
     <description>Spring Cloud Stream tasklauncher cloudfoundry App Dependencies</description>
@@ -32,7 +32,7 @@
             <dependency>
                 <groupId>org.springframework.cloud.stream.app</groupId>
                 <artifactId>spring-cloud-starter-stream-sink-task-launcher-cloudfoundry</artifactId>
-                <version>2.0.1.BUILD-SNAPSHOT</version>
+                <version>2.0.1.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
