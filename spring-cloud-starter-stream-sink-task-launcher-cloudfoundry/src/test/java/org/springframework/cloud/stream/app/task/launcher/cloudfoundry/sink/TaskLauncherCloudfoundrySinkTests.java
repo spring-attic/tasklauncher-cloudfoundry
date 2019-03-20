@@ -52,7 +52,7 @@ public abstract class TaskLauncherCloudfoundrySinkTests {
 	@Autowired
 	protected CloudFoundryDeploymentProperties taskDeploymentProperties;
 
-	@TestPropertySource(properties = { "spring.cloud.deployer.cloudfoundry.url = http://hello", "spring.cloud.deployer.cloudfoundry.password = bar",
+	@TestPropertySource(properties = { "spring.cloud.deployer.cloudfoundry.url = https://hello", "spring.cloud.deployer.cloudfoundry.password = bar",
 			"spring.cloud.deployer.cloudfoundry.username = foo", "spring.cloud.deployer.cloudfoundry.space = space",
 			"spring.cloud.deployer.cloudfoundry.org = org", "spring.cloud.deployer.cloudfoundry.domain=baz",
 			"spring.cloud.deployer.cloudfoundry.services=mydb", "spring.cloud.deployer.cloudfoundry.apiTimeout=123"})
@@ -60,7 +60,7 @@ public abstract class TaskLauncherCloudfoundrySinkTests {
 
 		@Test
 		public void test() throws Exception {
-			assertEquals("http://hello", cloudFoundryConnectionProperties.getUrl().toString());
+			assertEquals("https://hello", cloudFoundryConnectionProperties.getUrl().toString());
 			assertEquals("bar", cloudFoundryConnectionProperties.getPassword());
 			assertEquals("foo", cloudFoundryConnectionProperties.getUsername());
 			assertEquals("org", cloudFoundryConnectionProperties.getOrg());
