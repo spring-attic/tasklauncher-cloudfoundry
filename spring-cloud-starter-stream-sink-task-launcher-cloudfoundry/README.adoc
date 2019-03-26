@@ -45,7 +45,7 @@ maven repositories, be sure to set the `--maven.remote-repositories` properties.
 For example:
 
 ```
-java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot
+java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=https://repo.spring.io/libs-snapshot
 ```
 
 //tag::configuration-properties[]
@@ -81,7 +81,7 @@ command line arguments, and deployment properties from the TaskLaunchRequest,
 which it uses to deploy and launch the task.
 
 ```
-java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=http://repo.spring.io/libs-snapshot \
+java -jar task_launcher_cloudfoundry.jar --maven.remote-repositories.repo1.url=https://repo.spring.io/libs-snapshot \
     --spring.cloud.deployer.cloudfoundry.url=https://api.local.pcfdev.io \
     --spring.cloud.deployer.cloudfoundry.org=user-dataflow \
     --spring.cloud.deployer.cloudfoundry.space=development \
