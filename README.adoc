@@ -1,5 +1,7 @@
 # Task Launcher Cloudfoundry Sink
 
+WARNING: Deprecated. Use https://github.com/spring-cloud-stream-app-starters/tasklauncher-dataflow instead.
+
 To learn more about this application and the supported properties, please review the following link.
 
 include::spring-cloud-starter-stream-sink-task-launcher-cloudfoundry/README.adoc[]
